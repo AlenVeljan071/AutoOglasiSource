@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage x:Class="AutoOglasiSource.View.MainPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:model="clr-namespace:AutoOglasiSource.Model.Advertisement"
+             xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
+             xmlns:converters="clr-namespace:AutoOglasiSource.Helpers"
+             xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+             ios:Page.UseSafeArea="True"
+             x:DataType="viewmodel:AdvertisementsViewModel"
+               >
+
+    <Grid
+        ColumnDefinitions="*,*"
+        ColumnSpacing="5"
+        RowDefinitions="Auto,*,Auto"
+        RowSpacing="0"
+        >
+        <SearchBar Grid.Column="1" Placeholder="Search for Vehicle..." />
+        <ImageButton
+         Grid.Column="0"
+         HeightRequest="30"
+         Source="filtericon.png"
+         VerticalOptions="Center"
+         HorizontalOptions="Start"
+         BackgroundColor="Transparent"
+         Command="{Binding GoToFilterPageCommand}"/>
+        <RefreshView
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Command="{Binding GetAdvertisementsCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+            <ContentView>
+                <CollectionView ItemsSource="{Binding Advertisements}"
+                                SelectionMode="None">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout Orientation="Vertical"
+                        Span="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <StackLayout Padding="100">
+                            <Image
+                                HeightRequest="160"
+                                HorizontalOptions="Center"
+                                Source="nodata.png"
+                                VerticalOptions="Center"
+                                WidthRequest="160" />
+                        </StackLayout>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:AdvertisementListModel">
+                            <Grid Padding="1" HorizontalOptions="Fill">
+                                <Frame HeightRequest="210" Style="{StaticResource CardView}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer 
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AdvertisementsViewModel}},Path=GetAdvertisementDetailCommand}"
+                                            CommandParameter="{Binding .}"/>
+                                    </Frame.GestureRecognizers>
+                                    <Grid Padding="1" RowDefinitions="100,*" >
+                                        <Image
+                                            Grid.Row="0"
+                                            HorizontalOptions="FillAndExpand"
+                                            Aspect="AspectFill"
+                                            HeightRequest="100"
+                                            Source="{Binding Image.Link}"
+                                            WidthRequest="210"
+                                            />
+                                        <VerticalStackLayout
+                                            Grid.Row="1"
+                                            Padding="0"
+                                            VerticalOptions="Start">
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding Name}" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding Price, Converter={converters:DecimalToIntConverterValute}}"
+                                                />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding Year}" />
+                                            <Label
+                                                FontAttributes="Bold"
+                                                FontSize="12"
+                                                Text="{Binding Address.City}" />
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </Frame>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                    <CollectionView.Footer>
+                        <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                            <Button
+                        BackgroundColor="White"
+                        TextColor="Black"
+                        Text="Load More" />
+                        </StackLayout>
+                    </CollectionView.Footer>
+                </CollectionView>
+            </ContentView>
+        </RefreshView>
+        <ActivityIndicator
+            Grid.RowSpan="2"
+            Grid.ColumnSpan="2"
+            HorizontalOptions="Fill"
+            IsRunning="{Binding IsBusy}"
+            IsVisible="{Binding IsBusy}"
+            VerticalOptions="Center"
+            Color="{StaticResource Primary}" />
+    </Grid>
+</ContentPage>

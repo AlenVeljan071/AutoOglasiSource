@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AutoOglasiSource.View.FilterPopupPage"
+             xmlns:model="clr-namespace:AutoOglasiSource.Model.Advertisement"
+             xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:mopupsanimation="clr-namespace:Mopups.Animations;assembly=Mopups"
+             BackgroundColor="#80000000" >
+    <mopups:PopupPage.Animation>
+        <mopupsanimation:ScaleAnimation
+            DurationIn="500"
+            PositionIn="Top"
+            PositionOut="Center"
+            ScaleIn="0.2"
+            ScaleOut="0.2"
+            />
+    </mopups:PopupPage.Animation>
+    
+    <Border WidthRequest="250" Padding="10" Margin="0,30,0,0" HeightRequest="350" VerticalOptions="StartAndExpand" BackgroundColor="Gray">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10"/>
+        </Border.StrokeShape>
+    <Grid RowSpacing="5" Padding="10" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto">
+        <!--<Label 
+               Text="Add Filters"
+               VerticalOptions="Center" 
+               HorizontalOptions="CenterAndExpand" />-->
+            <Label 
+               Grid.Row="1"
+               Text="PRICE"
+               VerticalOptions="Center" 
+               HorizontalOptions="CenterAndExpand" />
+            <Grid HorizontalOptions="CenterAndExpand" Grid.Row="2" ColumnDefinitions="Auto,Auto">
+                <HorizontalStackLayout HorizontalOptions="CenterAndExpand">
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label 
+                           Text="FROM"
+                           VerticalOptions="Start" 
+                           HorizontalOptions="Center" />
+                        <Entry 
+                           x:Name="PriceFromEntry"
+                           VerticalOptions="End" 
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                           WidthRequest="100"
+                           Keyboard="Numeric"
+                           HorizontalOptions="Center"
+                           BackgroundColor="DarkGray"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout Grid.Column="1">
+                        <Label 
+                           Text="TO"
+                           VerticalOptions="Start" 
+                           HorizontalOptions="Center" />
+                        <Entry 
+                           Margin="10,0,0,0"
+                           Keyboard="Numeric"
+                           x:Name="PriceToEntry"
+                           HorizontalTextAlignment="Center"
+                           WidthRequest="100"
+                           VerticalOptions="End" 
+                           BackgroundColor="DarkGray"
+                           HorizontalOptions="Center" />
+                    </VerticalStackLayout>
+                </HorizontalStackLayout>
+              </Grid>
+            <Label 
+               Grid.Row="3"
+               Text="MILEAGE"
+               VerticalOptions="Center" 
+               Margin="0,35,0,0"
+               HorizontalOptions="CenterAndExpand" />
+            <Grid HorizontalOptions="CenterAndExpand" Grid.Row="4" ColumnDefinitions="Auto,Auto">
+            <HorizontalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label 
+                           Text="FROM"
+                           VerticalOptions="Start" 
+                           HorizontalOptions="Center" />
+                    <Entry 
+                           x:Name="MileageFromEntry"
+                           Keyboard="Numeric"
+                           VerticalOptions="End" 
+                           WidthRequest="100"
+                           HorizontalTextAlignment="Center"
+                           BackgroundColor="DarkGray"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label 
+                           Text="TO"
+                           VerticalOptions="Start" 
+                           HorizontalOptions="Center" />
+                    <Entry Margin="10,0,0,0"
+                           x:Name="MileageToEntry"
+                           HorizontalTextAlignment="Center"
+                           WidthRequest="100"
+                           Keyboard="Numeric"
+                           VerticalOptions="End" 
+                           BackgroundColor="DarkGray"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+            </Grid>
+            <Button
+                    Grid.Row="5"
+                    BackgroundColor="DarkGray"
+                    TextColor="Black"
+                    HorizontalOptions="Start"
+                    Text="Add Filter"
+                    WidthRequest="100"
+                    Margin="0,50,0,0"
+                    Clicked="Button_Clicked_1"
+              />
+            <Button
+                    Grid.Row="5"
+                    BackgroundColor="DarkGray"
+                    TextColor="Black"
+                    HorizontalOptions="End"
+                    Text="Close"
+                    WidthRequest="100"
+                    Margin="0,50,0,0"
+                    Clicked="Button_Clicked"
+              />
+      
+
+    </Grid>
+    </Border>
+</mopups:PopupPage>

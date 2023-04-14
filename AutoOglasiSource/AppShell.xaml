@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="AutoOglasiSource.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:AutoOglasiSource.View"
+    Shell.FlyoutBehavior="Disabled">
+
+
+    <TabBar>
+        <Tab Title="Home" Icon="homesvg.png">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+        <Tab Title="Messages" Icon="message.svg">
+            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
+        </Tab>
+
+        <Tab Title="Add">
+            <ShellContent ContentTemplate="{DataTemplate local:AddPage}" />
+        </Tab>
+        <Tab Title="User">
+            <ShellContent ContentTemplate="{DataTemplate local:UserPage}" />
+        </Tab>
+        <Tab Title="Menu">
+            <ShellContent ContentTemplate="{DataTemplate local:UserPage}" />
+        </Tab>
+    </TabBar>
+
+</Shell>
