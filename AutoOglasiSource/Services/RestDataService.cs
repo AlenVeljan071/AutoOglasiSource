@@ -436,6 +436,42 @@ namespace AutoOglasiSource.Services
 
         }
 
+        public async Task<List<VehicleBrand>> GetVehicleBrandAndModelByCatIdAsync(int id)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+
+                var apiResponse = await httpClient.GetAsync($"{_url}/advertisements/vehiclemodel/{id}");
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    var responseJson = await apiResponse.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<List<VehicleBrand>>(responseJson);
+
+                    return responseData;
+                }
+                return null;
+                //else
+                //{
+                //    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                //    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                //    return new TrainerModel { ErrorMessage = errorData.Error };
+                //}
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                //errorResponse = "The server is under maintenance. Please try again later.";
+                //return new TrainerModel { ErrorMessage = errorResponse };
+                return null;
+            }
+
+        }
+
         #endregion
     }
 }

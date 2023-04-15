@@ -41,6 +41,7 @@ public static class MauiProgram
         builder.Services.AddSingleton<AdvertisementDetailsViewModel>();
         builder.Services.AddTransient<UserViewModel>();
         builder.Services.AddSingleton<RegisterViewModel>();
+        builder.Services.AddSingleton<AddAdvertisementViewModel>();
 
 
 

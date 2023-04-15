@@ -1,10 +1,56 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AutoOglasiSource.View.AddPage">
-    <VerticalStackLayout>
-        <Grid RowDefinitions="Auto,Auto,Auto">
-            <ImageButton/>
+             x:Class="AutoOglasiSource.View.AddPage"
+             xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
+             xmlns:behaviors="clr-namespace:AutoOglasiSource.Helpers"
+             x:DataType="viewmodel:AddAdvertisementViewModel">
+    
+    <Grid RowDefinitions="Auto,Auto,Auto">
+            <VerticalStackLayout Spacing="10">
+            <Picker Title="Category"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding Category}"
+                    ItemDisplayBinding="{Binding Name}"
+                    >
+                <Picker.Behaviors>
+                    <behaviors:PickerSelectedIndexChangedBehavior 
+                     Command="{Binding GetVehicleModelsCommand}"/>
+                </Picker.Behaviors>
+            </Picker>
+
+            <Picker Title="Brand" ItemsSource="{Binding VehicleBrands}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding VehicleBrand, Mode=TwoWay}" />
+          
+                <Picker Title="Model" ItemsSource="{Binding VehicleModels}"
+                    ItemDisplayBinding="{Binding Name}"
+                    SelectedItem="{Binding VehicleModel, Mode=TwoWay}" />
+            <Picker Title="Color">
+                <Picker.Items>
+                </Picker.Items>
+            </Picker>
+            <HorizontalStackLayout>
+            <Frame  HeightRequest="50" WidthRequest="100" Padding="10" BackgroundColor="{Binding ColorFront}" >
+                <Label Text="Front" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White"/>
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding FrontSelectionCommand}" />
+                </Frame.GestureRecognizers>
+            </Frame>
+                <Frame HeightRequest="50" WidthRequest="100" Padding="10" BackgroundColor="{Binding ColorRear}" >
+                    <Label Text="Rear" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RearSelectionCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+                <Frame HeightRequest="50" WidthRequest="100" Padding="10" BackgroundColor="{Binding ColorAll}" >
+                    <Label Text="All" HorizontalOptions="Center" VerticalOptions="Center" TextColor="White"/>
+                    <Frame.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding AllSelectionCommand}" />
+                    </Frame.GestureRecognizers>
+                </Frame>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
         </Grid>
-    </VerticalStackLayout>
+    
 </ContentPage>

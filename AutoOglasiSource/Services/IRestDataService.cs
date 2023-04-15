@@ -14,5 +14,6 @@ namespace AutoOglasiSource.Services
         Task<UserModel> GetUserByIdAsync(int id);
         Task<List<AdvertisementListModel>> GetAdvertisementListAsync(AdvertisementSpecParams specParams);
         Task<AdvertisementModel> GetAdvertisementByIdAsync(int id);
+        Task<List<VehicleBrand>> GetVehicleBrandAndModelByCatIdAsync(int id);
     }
 }
