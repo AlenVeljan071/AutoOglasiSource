@@ -1,9 +1,12 @@
+using AutoOglasiSource.ViewModel;
+
 namespace AutoOglasiSource.View;
 
 public partial class AddPhotosPage : ContentPage
 {
-	public AddPhotosPage()
+	public AddPhotosPage(AddPhotosViewModel viewModel)
 	{
 		InitializeComponent();
+		BindingContext = viewModel;
 	}
 }

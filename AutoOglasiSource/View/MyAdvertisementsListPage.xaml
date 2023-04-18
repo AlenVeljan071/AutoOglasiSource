@@ -1,13 +1,13 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="AutoOglasiSource.View.MainPage"
-             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:model="clr-namespace:AutoOglasiSource.Model.Advertisement"
+             x:Class="AutoOglasiSource.View.MyAdvertisementsListPage"
+              xmlns:model="clr-namespace:AutoOglasiSource.Model.Advertisement"
              xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
              xmlns:converters="clr-namespace:AutoOglasiSource.Helpers"
              xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
              ios:Page.UseSafeArea="True"
-             x:DataType="viewmodel:AdvertisementsViewModel"
+             x:DataType="viewmodel:MyAdvertisementsListViewModel"
                >
 
     <Grid
@@ -16,18 +16,10 @@
         RowDefinitions="Auto,*,Auto"
         RowSpacing="0"
         >
-        <ImageButton
-         Grid.Column="0"
-         HeightRequest="30"
-         Source="filtericon.png"
-         VerticalOptions="Center"
-         HorizontalOptions="Start"
-         BackgroundColor="Transparent"
-         Command="{Binding GoToFilterPageCommand}"/>
         <RefreshView
             Grid.Row="1"
             Grid.ColumnSpan="2"
-            Command="{Binding GetAdvertisementsCommand}"
+            Command="{Binding GetMyAdvertisementsCommand}"
             IsRefreshing="{Binding IsRefreshing}">
             <ContentView>
                 <CollectionView ItemsSource="{Binding Advertisements}"
@@ -52,7 +44,7 @@
                                 <Frame HeightRequest="210" Style="{StaticResource CardView}">
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer 
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AdvertisementsViewModel}},Path=GetAdvertisementDetailCommand}"
+                                            Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyAdvertisementsListViewModel}},Path=GetMyAdvertisementDetailCommand}"
                                             CommandParameter="{Binding .}"/>
                                     </Frame.GestureRecognizers>
                                     <Grid Padding="1" RowDefinitions="100,*" >

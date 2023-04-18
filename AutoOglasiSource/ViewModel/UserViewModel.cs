@@ -1,4 +1,5 @@
 ﻿using AutoOglasiSource.Model.Account;
+using AutoOglasiSource.Model.Advertisement;
 using AutoOglasiSource.Services;
 using AutoOglasiSource.View;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -19,6 +20,12 @@ namespace AutoOglasiSource.ViewModel
            
         }
 
+        [ObservableProperty]
+        AdvertisementSpecParams specParams = new();
+
+
+        [ObservableProperty]
+        int id;
 
         [ObservableProperty]
         UserModel user = new();
@@ -55,7 +62,7 @@ namespace AutoOglasiSource.ViewModel
                     var imageData = new byte[imageStream.Length];
                     imageStream.Read(imageData, 0, imageData.Length);
                     User.Avatar = imageData;
-                    User.FirstName = "Guest";
+                    User.Email = "Guest";
                 }
             }
             catch (Exception ex)
@@ -84,11 +91,33 @@ namespace AutoOglasiSource.ViewModel
         }
 
         [RelayCommand]
+        async Task GoToMyAdvertisements()
+        {
+            string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+            if (oauthToken != null)
+            {
+               await Shell.Current.GoToAsync(nameof(MyAdvertisementsListPage));
+            }
+            else
+            {
+                await DisplayLoginMessage("Please login");
+            }
+        }
+           
+           
+       
+
+        [RelayCommand]
         async void Logout()
         {
             SecureStorage.Remove("oauth_token");
-            await Shell.Current.GoToAsync(nameof(LoginPage));
+            await Shell.Current.GoToAsync(nameof(UserPage));
         }
 
+
+        public async Task DisplayLoginMessage(string message)
+        {
+            await Shell.Current.DisplayAlert("User Attempt Result", message, "OK");
+        }
     }
 }

@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace AutoOglasiSource.Model.Advertisement
 {
-    public class VehicleBrand
+    public class AddImageModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public bool Success { get; set; }
+        public string ErrorMessage { get; set; }
+        public string Link { get; set; }
     }
 }

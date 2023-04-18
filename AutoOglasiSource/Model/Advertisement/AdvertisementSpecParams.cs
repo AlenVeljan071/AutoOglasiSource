@@ -7,8 +7,8 @@ namespace AutoOglasiSource.Model.Advertisement
         [JsonProperty("pageIndex")]
         public int? PageIndex { get; set; }
 
-        [JsonProperty("userId")]
-        public int? UserId { get; set; }
+        [JsonProperty("applicationUserId")]
+        public int? ApplicationUserId { get; set; }
 
         [JsonProperty("priceFrom")]
         public decimal? PriceFrom { get; set; }

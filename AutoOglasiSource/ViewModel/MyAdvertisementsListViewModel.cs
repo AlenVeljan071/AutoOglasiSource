@@ -3,29 +3,27 @@ using AutoOglasiSource.Services;
 using AutoOglasiSource.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Mopups.Interfaces;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace AutoOglasiSource.ViewModel
 {
-    public partial class AdvertisementsViewModel : BaseViewModel
+
+    public partial class MyAdvertisementsListViewModel : BaseViewModel
     {
         public ObservableCollection<AdvertisementListModel> Advertisements { get; } = new();
         IRestDataService _restDataService;
         IConnectivity _connectivity;
-        IPopupNavigation _popupNavigation;
-        public AdvertisementsViewModel(IRestDataService restDataService, IConnectivity connectivity, IPopupNavigation popupNavigation)
+        public MyAdvertisementsListViewModel(IRestDataService restDataService, IConnectivity connectivity)
         {
             _restDataService = restDataService;
             _connectivity = connectivity;
-            _popupNavigation = popupNavigation;
-            Task.Run(async () => await GetAdvertisementsAsync(SpecParams));
+            Task.Run(async () => await GetMyAdvertisementsAsync(SpecParams));
         }
 
         [ObservableProperty]
         AdvertisementModel advertisement = new();
-
         [ObservableProperty]
         AdvertisementListModel advertisementList;
 
@@ -36,7 +34,7 @@ namespace AutoOglasiSource.ViewModel
         bool isRefreshing;
 
         [RelayCommand]
-        async Task GetAdvertisementDetailAsync(AdvertisementListModel advertisementList)
+        async Task GetMyAdvertisementDetailAsync(AdvertisementListModel advertisementList)
         {
             if (IsBusy)
                 return;
@@ -54,7 +52,7 @@ namespace AutoOglasiSource.ViewModel
 
                 Advertisement = await _restDataService.GetAdvertisementByIdAsync(advertisementList.Id);
 
-                await Shell.Current.GoToAsync(nameof(AdvertisementDetailsPage), true, new Dictionary<string, object>
+                await Shell.Current.GoToAsync(nameof(MyAdvertisementPage), true, new Dictionary<string, object>
                 {
                   { "Advertisement", Advertisement}
                 });
@@ -73,7 +71,7 @@ namespace AutoOglasiSource.ViewModel
 
 
         [RelayCommand]
-        public async Task GetAdvertisementsAsync(AdvertisementSpecParams specParams)
+        public async Task GetMyAdvertisementsAsync(AdvertisementSpecParams specParams)
         {
             if (IsBusy)
                 return;
@@ -88,7 +86,14 @@ namespace AutoOglasiSource.ViewModel
                 }
 
                 IsBusy = true;
-                if(specParams != null) SpecParams = specParams;
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+                if (oauthToken != null)
+                {
+                    var jsonToken = new JwtSecurityTokenHandler().ReadToken(oauthToken) as JwtSecurityToken;
+                    var userId = jsonToken.Claims.FirstOrDefault(q => q.Type.Equals("UserId"))?.Value;
+                    SpecParams.ApplicationUserId = (Convert.ToInt32(userId));
+                }
+                if (specParams != null) SpecParams = specParams;
                 var advertisements = await _restDataService.GetAdvertisementListAsync(SpecParams);
 
                 if (Advertisements.Count != 0)
@@ -108,13 +113,6 @@ namespace AutoOglasiSource.ViewModel
                 IsBusy = false;
                 IsRefreshing = false;
             }
-        }
-
-        [RelayCommand]
-        void GoToFilterPage()
-        {
-            var filterPage = new FilterPopupPage(this);
-            _popupNavigation.PushAsync(filterPage);
         }
     }
 }

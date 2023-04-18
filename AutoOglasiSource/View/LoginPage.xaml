@@ -4,7 +4,7 @@
              xmlns:viewmodel ="clr-namespace:AutoOglasiSource.ViewModel"
              x:Class="AutoOglasiSource.View.LoginPage"
              x:DataType ="viewmodel:LoginViewModel"
-             Title="LoginPage">
+             >
     <VerticalStackLayout
         Spacing="25" 
         Padding="30,0" 

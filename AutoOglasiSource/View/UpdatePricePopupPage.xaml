@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<mopups:PopupPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AutoOglasiSource.View.UpdatePricePopupPage"
+              xmlns:model="clr-namespace:AutoOglasiSource.Model.Advertisement"
+             xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
+             xmlns:mopups="clr-namespace:Mopups.Pages;assembly=Mopups"
+             xmlns:mopupsanimation="clr-namespace:Mopups.Animations;assembly=Mopups"
+             BackgroundColor="#80000000" >
+    <mopups:PopupPage.Animation>
+        <mopupsanimation:ScaleAnimation
+            DurationIn="500"
+            PositionIn="Top"
+            PositionOut="Center"
+            ScaleIn="0.2"
+            ScaleOut="0.2"
+            />
+    </mopups:PopupPage.Animation>
+
+    <Border WidthRequest="250" Padding="10" Margin="0,30,0,0" HeightRequest="300" VerticalOptions="StartAndExpand" BackgroundColor="Gray">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="10"/>
+        </Border.StrokeShape>
+        <VerticalStackLayout>
+            <Label 
+                           Text="Price"
+                           VerticalOptions="Start" 
+                           HorizontalOptions="Center" />
+            <Entry 
+                           x:Name="PriceEntry"
+                           VerticalOptions="End" 
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                           WidthRequest="100"
+                           Keyboard="Numeric"
+                           HorizontalOptions="Center"
+                           BackgroundColor="DarkGray"/>
+            <HorizontalStackLayout Spacing="30" Margin="0,40,0,0">
+                <Button
+                    Grid.Row="5"
+                    BackgroundColor="DarkGray"
+                    TextColor="Black"
+                    HorizontalOptions="Start"
+                    Text="Add Filter"
+                    WidthRequest="100"
+                    Margin="0,50,0,0"
+                    Clicked="UpdatePrice_Clicked"
+              />
+                <Button
+                    Grid.Row="5"
+                    BackgroundColor="DarkGray"
+                    TextColor="Black"
+                    HorizontalOptions="End"
+                    Text="Close"
+                    WidthRequest="100"
+                    Margin="0,50,0,0"
+                    Clicked="Cancel_Clicked"
+              />
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+        
+    </Border>
+    </mopups:PopupPage>

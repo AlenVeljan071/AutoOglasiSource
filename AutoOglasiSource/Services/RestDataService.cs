@@ -3,6 +3,7 @@ using AutoOglasiSource.Model.Account;
 using AutoOglasiSource.Model.Advertisement;
 using AutoOglasiSource.Responses;
 using Newtonsoft.Json;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 
@@ -300,10 +301,227 @@ namespace AutoOglasiSource.Services
         }
 
 
-            #endregion
+        #endregion
 
-            #region Advertisement
-            public async Task<List<AdvertisementListModel>> GetAdvertisementListAsync(AdvertisementSpecParams specParams)
+        #region Advertisement
+        public async Task<CreateModel> CreateAdvertisementAsync(AdvertisementRequestModel advRequest)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+
+                if (oauthToken == null)
+                {
+                    return new CreateModel { ErrorMessage = "Please login" };
+                }
+                httpClient.DefaultRequestHeaders.Authorization
+                      = new AuthenticationHeaderValue("Bearer", oauthToken);
+
+                advRequest.Name = "Audi";
+                var requestDataJson = JsonConvert.SerializeObject(advRequest);
+
+                var requestContent = new StringContent(requestDataJson, Encoding.UTF8, "application/json");
+                var apiResponse = await httpClient.PostAsync($"{_url}/advertisements", requestContent);
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    var responseJson = await apiResponse.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<CreateModel>(responseJson);
+
+                    return new CreateModel { Success = true, Id = responseData.Id };
+                }
+                else if(apiResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    var errorResponse = "Please login.";
+                    return new CreateModel { ErrorMessage = errorResponse };
+                }
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new CreateModel { ErrorMessage = errorData.Error };
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new CreateModel { ErrorMessage = errorResponse };
+            }
+        }
+
+        public async Task<AddImageModel> AddPhotoToAdvertisementAsync(AdsImage image)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+
+                if (oauthToken == null)
+                {
+                    return new AddImageModel { ErrorMessage = "No token" };
+                }
+                httpClient.DefaultRequestHeaders.Authorization
+                      = new AuthenticationHeaderValue("Bearer", oauthToken);
+
+                var requestDataJson = JsonConvert.SerializeObject(image);
+
+                var requestContent = new StringContent(requestDataJson, Encoding.UTF8, "application/json");
+                var apiResponse = await httpClient.PostAsync($"{_url}/advertisements/image", requestContent);
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    var responseJson = await apiResponse.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<AddImageModel>(responseJson);
+                    return new AddImageModel { Success = true, Link = responseData.Link };
+                }
+                else if (apiResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    var errorResponse = "Please login.";
+                    return new AddImageModel { ErrorMessage = errorResponse };
+                }
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new AddImageModel { ErrorMessage = errorData.Error };
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new AddImageModel { ErrorMessage = errorResponse };
+            }
+        }
+        public async Task<ErrorData> DeletePhotoAsync(int id)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+
+                if (oauthToken == null)
+                {
+                    return new ErrorData { Error = "Please login" };
+                }
+                httpClient.DefaultRequestHeaders.Authorization
+                      = new AuthenticationHeaderValue("Bearer", oauthToken);
+
+                var apiResponse = await httpClient.DeleteAsync($"{_url}/advertisements/image/{id}");
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    return new ErrorData { Error = "Deleted" };
+
+                }
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new ErrorData { Error = errorData.Error };
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new ErrorData { Error = errorResponse };
+            }
+        }
+
+
+        public async Task<ErrorData> UpdatePriceAsync(int id, decimal price)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+
+                if (oauthToken == null)
+                {
+                    return new ErrorData { Error = "Please login" };
+                }
+                httpClient.DefaultRequestHeaders.Authorization
+                      = new AuthenticationHeaderValue("Bearer", oauthToken);
+                var request = new {Id = id, Price = price};
+                var requestDataJson = JsonConvert.SerializeObject(request);
+
+                var requestContent = new StringContent(requestDataJson, Encoding.UTF8, "application/json");
+                var apiResponse = await httpClient.PutAsync($"{_url}/advertisements/price", requestContent);
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    return new ErrorData { Error = "Updated" };
+                  
+                }
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new ErrorData { Error = errorData.Error };
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new ErrorData { Error = errorResponse };
+            }
+        }
+
+        public async Task<ErrorData> DeleteAdvertisementAsync(int id)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+
+                if (oauthToken == null)
+                {
+                    return new ErrorData { Error = "Please login" };
+                }
+                httpClient.DefaultRequestHeaders.Authorization
+                      = new AuthenticationHeaderValue("Bearer", oauthToken);
+             
+                var apiResponse = await httpClient.DeleteAsync($"{_url}/advertisements/{id}");
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    return new ErrorData { Error = "Deleted" };
+
+                }
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new ErrorData { Error = errorData.Error };
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new ErrorData { Error = errorResponse };
+            }
+        }
+        public async Task<List<AdvertisementListModel>> GetAdvertisementListAsync(AdvertisementSpecParams specParams)
             {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
@@ -312,7 +530,7 @@ namespace AutoOglasiSource.Services
             try
             {
                 if (specParams.PageIndex == null) specParams.PageIndex = 1;
-                var apiResponse = await httpClient.GetAsync($"{_url}/advertisements/list?priceFrom={specParams.PriceFrom}&priceTo={specParams.PriceTo}&mileageFrom={specParams.MileageFrom}&mileageTo={specParams.MileageTo}&sort={specParams.Sort}&search={specParams.Search}&pageIndex={specParams.PageIndex}");
+                var apiResponse = await httpClient.GetAsync($"{_url}/advertisements/list?priceFrom={specParams.PriceFrom}&priceTo={specParams.PriceTo}&mileageFrom={specParams.MileageFrom}&mileageTo={specParams.MileageTo}&sort={specParams.Sort}&search={specParams.Search}&pageIndex={specParams.PageIndex}&applicationUserId={specParams.ApplicationUserId}");
                 if (apiResponse.IsSuccessStatusCode)
                 {
                     var responseJson = await apiResponse.Content.ReadAsStringAsync();
@@ -436,7 +654,43 @@ namespace AutoOglasiSource.Services
 
         }
 
-        public async Task<List<VehicleBrand>> GetVehicleBrandAndModelByCatIdAsync(int id)
+        public async Task<List<VehicleBrand>> GetVehicleBrandCatIdAsync(int id)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+
+                var apiResponse = await httpClient.GetAsync($"{_url}/advertisements/vehiclebrand/{id}");
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    var responseJson = await apiResponse.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<List<VehicleBrand>>(responseJson);
+
+                    return responseData;
+                }
+                return null;
+                //else
+                //{
+                //    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                //    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                //    return new TrainerModel { ErrorMessage = errorData.Error };
+                //}
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                //errorResponse = "The server is under maintenance. Please try again later.";
+                //return new TrainerModel { ErrorMessage = errorResponse };
+                return null;
+            }
+
+        }
+
+        public async Task<List<VehicleModel>> GetVehicleModelByBrandIdAsync(int id)
         {
             if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
             {
@@ -450,7 +704,7 @@ namespace AutoOglasiSource.Services
                 if (apiResponse.IsSuccessStatusCode)
                 {
                     var responseJson = await apiResponse.Content.ReadAsStringAsync();
-                    var responseData = JsonConvert.DeserializeObject<List<VehicleBrand>>(responseJson);
+                    var responseData = JsonConvert.DeserializeObject<List<VehicleModel>>(responseJson);
 
                     return responseData;
                 }

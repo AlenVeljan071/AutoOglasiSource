@@ -11,18 +11,14 @@
         <Tab Title="Home" Icon="homesvg.png">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
-        <Tab Title="Messages" Icon="message.svg">
-            <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
-        </Tab>
-
         <Tab Title="Add">
             <ShellContent ContentTemplate="{DataTemplate local:AddPage}" />
         </Tab>
         <Tab Title="User">
             <ShellContent ContentTemplate="{DataTemplate local:UserPage}" />
         </Tab>
-        <Tab Title="Menu">
-            <ShellContent ContentTemplate="{DataTemplate local:UserPage}" />
+        <Tab Title="Settings">
+            <ShellContent ContentTemplate="{DataTemplate local:EditUserPage}" />
         </Tab>
     </TabBar>
 
