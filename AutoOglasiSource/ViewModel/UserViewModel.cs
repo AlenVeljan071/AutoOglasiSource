@@ -12,6 +12,7 @@ namespace AutoOglasiSource.ViewModel
     {
         IRestDataService _restDataService;
         IConnectivity _connectivity;
+        
         public UserViewModel(IRestDataService restDataService, IConnectivity connectivity)
         {
             _restDataService = restDataService;
@@ -26,6 +27,9 @@ namespace AutoOglasiSource.ViewModel
 
         [ObservableProperty]
         int id;
+
+        [ObservableProperty]
+        string userEmail;
 
         [ObservableProperty]
         UserModel user = new();
@@ -54,16 +58,14 @@ namespace AutoOglasiSource.ViewModel
                     var jsonToken = new JwtSecurityTokenHandler().ReadToken(oauthToken) as JwtSecurityToken;
                     var userId = jsonToken.Claims.FirstOrDefault(q => q.Type.Equals("UserId"))?.Value;
                     User = await _restDataService.GetUserByIdAsync(Convert.ToInt32(userId));
+                    UserEmail = User.Email;
                 }
                 else
                 {
-                    var assembly = typeof(App).Assembly;
-                    var imageStream = assembly.GetManifestResourceStream("AutoOglasiSource.Resources.Images.uploadavatar.png");
-                    var imageData = new byte[imageStream.Length];
-                    imageStream.Read(imageData, 0, imageData.Length);
-                    User.Avatar = imageData;
-                    User.Email = "Guest";
+                    UserEmail = "Guest";
                 }
+               
+                
             }
             catch (Exception ex)
             {
@@ -76,13 +78,13 @@ namespace AutoOglasiSource.ViewModel
             }
 
         }
-           
-
 
         [RelayCommand]
         async Task GoToLogin()
         {
+           
            await Shell.Current.GoToAsync(nameof(LoginPage));
+          
         }
         [RelayCommand]
         async Task GoToRegister()
@@ -103,18 +105,17 @@ namespace AutoOglasiSource.ViewModel
                 await DisplayLoginMessage("Please login");
             }
         }
-           
-           
-       
 
         [RelayCommand]
-        async void Logout()
+        void Logout()
         {
             SecureStorage.Remove("oauth_token");
-            await Shell.Current.GoToAsync(nameof(UserPage));
+
+            User = null;
+            IsRefreshing = true;
+            SpecParams = null;
+            Id = 0;
         }
-
-
         public async Task DisplayLoginMessage(string message)
         {
             await Shell.Current.DisplayAlert("User Attempt Result", message, "OK");

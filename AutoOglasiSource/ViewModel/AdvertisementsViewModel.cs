@@ -17,10 +17,12 @@ namespace AutoOglasiSource.ViewModel
         IPopupNavigation _popupNavigation;
         public AdvertisementsViewModel(IRestDataService restDataService, IConnectivity connectivity, IPopupNavigation popupNavigation)
         {
+           
             _restDataService = restDataService;
             _connectivity = connectivity;
             _popupNavigation = popupNavigation;
             Task.Run(async () => await GetAdvertisementsAsync(SpecParams));
+            SpecParams.PageIndex = 1;
         }
 
         [ObservableProperty]
@@ -35,6 +37,7 @@ namespace AutoOglasiSource.ViewModel
         [ObservableProperty]
         bool isRefreshing;
 
+        
         [RelayCommand]
         async Task GetAdvertisementDetailAsync(AdvertisementListModel advertisementList)
         {
@@ -88,11 +91,52 @@ namespace AutoOglasiSource.ViewModel
                 }
 
                 IsBusy = true;
+            
                 if(specParams != null) SpecParams = specParams;
+                SpecParams.PageIndex = 1;
                 var advertisements = await _restDataService.GetAdvertisementListAsync(SpecParams);
 
                 if (Advertisements.Count != 0)
                     Advertisements.Clear();
+
+                foreach (var advertisement in advertisements)
+                    Advertisements.Add(advertisement);
+
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Unable to get ads: {ex.Message}");
+                await Shell.Current.DisplayAlert("Error!", ex.Message, "OK");
+            }
+            finally
+            {
+                IsBusy = false;
+                IsRefreshing = false;
+            }
+        }
+
+        [RelayCommand]
+        public async Task GetMoreAdvertisementsAsync(AdvertisementSpecParams specParams)
+        {
+            if (IsBusy)
+                return;
+
+            try
+            {
+                if (_connectivity.NetworkAccess != NetworkAccess.Internet)
+                {
+                    await Shell.Current.DisplayAlert("No connectivity!",
+                        $"Please check internet and try again.", "OK");
+                    return;
+                }
+
+                IsBusy = true;
+              
+                
+                if (specParams != null) SpecParams = specParams;
+                SpecParams.PageIndex++;
+                
+                var advertisements = await _restDataService.GetAdvertisementListAsync(SpecParams);
 
                 foreach (var advertisement in advertisements)
                     Advertisements.Add(advertisement);

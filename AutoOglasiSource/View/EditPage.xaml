@@ -1,88 +1,61 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage
-    x:Class="AutoOglasiSource.View.AddPage"
-    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:behaviors="clr-namespace:AutoOglasiSource.Helpers"
-    xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
-    x:DataType="viewmodel:AddAdvertisementViewModel">
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AutoOglasiSource.View.EditPage"
+             xmlns:behaviors="clr-namespace:AutoOglasiSource.Helpers"
+             xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
+             x:DataType="viewmodel:EditAdvertisementVIewModel"
+             >
     <ScrollView>
         <Grid RowDefinitions="Auto,Auto,Auto" Padding="30">
             <VerticalStackLayout Spacing="5" Padding="10">
-                <Label Text="Category" FontAttributes="Bold" Margin="0,35,0,0"/>
-                <Frame BorderColor="DarkGray" CornerRadius="10" BackgroundColor="LightGray" HeightRequest="76">
-                    <Picker
-                    Title=" Choose category"
-                    ItemDisplayBinding="{Binding Name}"
-                    ItemsSource="{Binding Categories}"
-                    SelectedItem="{Binding SelectedCategory}" />
-                </Frame>
-
-                <Label Text="Brand" FontAttributes="Bold" Margin="0,35,0,0"/>
-                <Frame BorderColor="DarkGray" CornerRadius="10" BackgroundColor="LightGray" HeightRequest="76">
-                        <Picker
-                         Title="Choose brand"
-                         TitleColor="Black"
-                         TextColor="Black"
-                         ItemDisplayBinding="{Binding Name}"
-                         ItemsSource="{Binding VehicleBrands}"
-                         SelectedItem="{Binding SelectedBrand}" />
-                </Frame>
-                <Label Text="Model" FontAttributes="Bold" Margin="0,35,0,0"/>
-                <Frame BorderColor="DarkGray" HeightRequest="76" CornerRadius="10" BackgroundColor="LightGray">
-                    <Picker
-                    Title="Choose model"
-                    ItemDisplayBinding="{Binding Name}"
-                    ItemsSource="{Binding VehicleModels}"
-                    SelectedItem="{Binding SelectedModel}" />
-                </Frame>
                 <Label Text="First registration" FontAttributes="Bold" Margin="0,35,0,0"/>
                 <Frame BorderColor="DarkGray" HeightRequest="76" CornerRadius="10" BackgroundColor="LightGray">
-                            <Picker 
+                    <Picker 
                                Title="Year"
                                ItemsSource="{Binding Years}"
-                               SelectedItem="{Binding Advertisement.Year}" />
-                        </Frame>
+                               SelectedItem="{Binding AdvertisementEdit.Year}" />
+                </Frame>
 
                 <Label Text="Price" FontAttributes="Bold" Margin="0,35,0,0"/>
                 <Frame CornerRadius="10" BackgroundColor="LightGray" HeightRequest="76">
-                        <Entry HorizontalTextAlignment="End" Text="{Binding Advertisement.Price}" />
-                    </Frame>
+                    <Entry HorizontalTextAlignment="End" Text="{Binding AdvertisementEdit.Price}" />
+                </Frame>
 
                 <Label Text="Address" FontAttributes="Bold" Margin="0,35,0,0"/>
                 <Frame  CornerRadius="10" BackgroundColor="LightGray" HeightRequest="76">
-                   
-                        <Entry Placeholder="Address" Text="{Binding AddressReq.Address}" />
-                    </Frame>
+
+                    <Entry Placeholder="Address" Text="{Binding AddressReq.Address}" />
+                </Frame>
                 <Label Text="City" FontAttributes="Bold" Margin="0,35,0,0"/>
                 <Frame  CornerRadius="10" BackgroundColor="LightGray" HeightRequest="76">
                     <Entry Placeholder="City" Text="{Binding AddressReq.City}" />
-                    </Frame>
+                </Frame>
                 <Label Text="Country" FontAttributes="Bold" Margin="0,35,0,0"/>
                 <Frame  CornerRadius="10" BackgroundColor="LightGray" HeightRequest="76">
                     <Entry Placeholder="Country" Text="{Binding AddressReq.Country}" />
-                    </Frame>
+                </Frame>
 
                 <Label Text="Drive" FontSize="16" FontAttributes="Bold" Margin="0,100,0,0" />
-               
-                    <HorizontalStackLayout>
-                        <Frame
+
+                <HorizontalStackLayout>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorFront}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Front"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding DriveSelectionCommand}" CommandParameter="Front" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DriveSelectionCommand}" CommandParameter="Front" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
@@ -90,16 +63,16 @@
                         HeightRequest="50"
                         WidthRequest="100"
                         >
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Rear"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding DriveSelectionCommand}" CommandParameter="Rear" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DriveSelectionCommand}" CommandParameter="Rear" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
@@ -107,153 +80,153 @@
                         HeightRequest="50"
                         WidthRequest="100"
                         >
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="All"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding DriveSelectionCommand}" CommandParameter="All" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                    </HorizontalStackLayout>
-                    <Label Text="Fuel" FontSize="16" FontAttributes="Bold" Margin="0,50,0,0" />
-                    <HorizontalStackLayout>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DriveSelectionCommand}" CommandParameter="All" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </HorizontalStackLayout>
+                <Label Text="Fuel" FontSize="16" FontAttributes="Bold" Margin="0,50,0,0" />
+                <HorizontalStackLayout>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorDiesel}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Diesel"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Diesel" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Diesel" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorGasoline}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Gasoline"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Gasoline" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                    </HorizontalStackLayout>
-                    <HorizontalStackLayout>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Gasoline" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </HorizontalStackLayout>
+                <HorizontalStackLayout>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorGas}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Gas"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Gas" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Gas" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorHybrid}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Hybrid"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Hybrid" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Hybrid" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorElectric}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Electric"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Electric" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                    </HorizontalStackLayout>
-                    <Label Text="Shifter" FontSize="16" FontAttributes="Bold"   Margin="0,50,0,0" />
-                    <HorizontalStackLayout>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding FuelSelectionCommand}" CommandParameter="Electric" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </HorizontalStackLayout>
+                <Label Text="Shifter" FontSize="16" FontAttributes="Bold"   Margin="0,50,0,0" />
+                <HorizontalStackLayout>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorShifterAuto}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Automatic"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ShifterSelectionCommand}" CommandParameter="Automatic" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShifterSelectionCommand}" CommandParameter="Automatic" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorShifterManual}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Manual"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ShifterSelectionCommand}" CommandParameter="Manual" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                        <Frame
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShifterSelectionCommand}" CommandParameter="Manual" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                    <Frame
                         BorderColor="Black"
                         CornerRadius="0"
                         Padding="10"
                         BackgroundColor="{Binding ColorShifterSemiAuto}"
                         HeightRequest="50"
                         WidthRequest="100">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Semi auto"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ShifterSelectionCommand}" CommandParameter="SemiAuto" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                    </HorizontalStackLayout>
-                    <Label Text="Parking Sensors" FontSize="16" FontAttributes="Bold"  Margin="0,50,0,0" />
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ShifterSelectionCommand}" CommandParameter="SemiAuto" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </HorizontalStackLayout>
+                <Label Text="Parking Sensors" FontSize="16" FontAttributes="Bold"  Margin="0,50,0,0" />
                 <HorizontalStackLayout>
                     <Frame
                         BorderColor="Black"
@@ -312,16 +285,16 @@
                         BackgroundColor="{Binding ColorBoth}"
                         HeightRequest="50"
                         WidthRequest="108">
-                            <Label
+                        <Label
                             HorizontalOptions="Center"
                             Text="Both"
                             TextColor="White"
                             VerticalOptions="Center" />
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding ParkingSensorsSelectionCommand}" CommandParameter="Both" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                    </HorizontalStackLayout>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ParkingSensorsSelectionCommand}" CommandParameter="Both" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
+                </HorizontalStackLayout>
                 <Label Text="Gears" FontAttributes="Bold" Margin="0,100,0,0"/>
                 <Frame  BorderColor="DarkGray" HeightRequest="76" CornerRadius="10" BackgroundColor="LightGray">
                     <Picker  
@@ -340,7 +313,7 @@
                 </Frame>
                 <Label Text="Seats" FontAttributes="Bold" Margin="0,35,0,0"/>
                 <Frame BorderColor="DarkGray" HeightRequest="76" CornerRadius="10" BackgroundColor="LightGray">
-                <Picker
+                    <Picker
                     Title="Seats"
                     ItemDisplayBinding="{Binding Name}"
                     ItemsSource="{Binding Seats}"
@@ -358,25 +331,25 @@
 
                     <Label Text="Mileage" FontAttributes="Bold" Margin="0,35,0,0"/>
                     <Frame CornerRadius="10" BackgroundColor="LightGray" HeightRequest="76">
-                        <Entry HorizontalTextAlignment="End" Text="{Binding Advertisement.Mileage}" />
+                        <Entry HorizontalTextAlignment="End" Text="{Binding AdvertisementEdit.Mileage}" />
                     </Frame>
                     <HorizontalStackLayout Spacing="32">
                         <VerticalStackLayout>
                             <Label Text="CCM" FontAttributes="Bold" Margin="0,35,0,0"/>
                             <Frame HeightRequest="76" CornerRadius="10" BackgroundColor="LightGray">
-                                <Entry Placeholder="CCM"  WidthRequest="70" Text="{Binding Advertisement.CCM}" />
+                                <Entry Placeholder="CCM"  WidthRequest="70" Text="{Binding AdvertisementEdit.CCM}" />
                             </Frame>
                         </VerticalStackLayout>
                         <VerticalStackLayout>
                             <Label Text="KW" FontAttributes="Bold" Margin="0,35,0,0"/>
                             <Frame CornerRadius="10" HeightRequest="76" BackgroundColor="LightGray">
-                                <Entry Placeholder="CCM"  WidthRequest="70" Text="{Binding Advertisement.KW}" />
+                                <Entry Placeholder="CCM"  WidthRequest="70" Text="{Binding AdvertisementEdit.KW}" />
                             </Frame>
                         </VerticalStackLayout>
                         <VerticalStackLayout>
                             <Label Text="Power" FontAttributes="Bold" Margin="0,35,0,0"/>
                             <Frame CornerRadius="10" HeightRequest="76" BackgroundColor="LightGray">
-                                <Entry Placeholder="CCM"  WidthRequest="70" Text="{Binding Advertisement.HorsePower}" />
+                                <Entry Placeholder="CCM"  WidthRequest="70" Text="{Binding AdvertisementEdit.HorsePower}" />
                             </Frame>
                         </VerticalStackLayout>
                     </HorizontalStackLayout>
@@ -394,7 +367,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.Abs}"
+                        IsChecked="{Binding AdvertisementEdit.Abs}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -408,7 +381,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.Airbag}"
+                        IsChecked="{Binding AdvertisementEdit.Airbag}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -422,7 +395,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.Alarm}"
+                        IsChecked="{Binding AdvertisementEdit.Alarm}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -436,7 +409,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.AluminiumRims}"
+                        IsChecked="{Binding AdvertisementEdit.AluminiumRims}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -450,7 +423,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.CentralLock}"
+                        IsChecked="{Binding AdvertisementEdit.CentralLock}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -464,7 +437,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.DpfFilter}"
+                        IsChecked="{Binding AdvertisementEdit.DpfFilter}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -478,7 +451,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.DigitalClimate}"
+                        IsChecked="{Binding AdvertisementEdit.DigitalClimate}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -492,7 +465,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.RemoteUnlocking}"
+                        IsChecked="{Binding AdvertisementEdit.RemoteUnlocking}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -506,7 +479,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.ElectricWindows}"
+                        IsChecked="{Binding AdvertisementEdit.ElectricWindows}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -520,7 +493,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.ElectricMirrors}"
+                        IsChecked="{Binding AdvertisementEdit.ElectricMirrors}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -534,7 +507,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.SeatHeating}"
+                        IsChecked="{Binding AdvertisementEdit.SeatHeating}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -548,7 +521,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.SteeringWheelControls}"
+                        IsChecked="{Binding AdvertisementEdit.SteeringWheelControls}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -563,7 +536,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.Navigation}"
+                        IsChecked="{Binding AdvertisementEdit.Navigation}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -577,7 +550,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.ParkAssist}"
+                        IsChecked="{Binding AdvertisementEdit.ParkAssist}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -591,7 +564,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.CruiseControl}"
+                        IsChecked="{Binding AdvertisementEdit.CruiseControl}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -605,7 +578,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.ServiceBook}"
+                        IsChecked="{Binding AdvertisementEdit.ServiceBook}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -619,7 +592,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.Damaged}"
+                        IsChecked="{Binding AdvertisementEdit.Damaged}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -633,7 +606,7 @@
                     <CheckBox
                         Grid.Row="1"
                         HeightRequest="15"
-                        IsChecked="{Binding Advertisement.Registered}"
+                        IsChecked="{Binding AdvertisementEdit.Registered}"
                         WidthRequest="15"
                         Color="DarkGray" />
                     <Label
@@ -644,7 +617,7 @@
                         TextColor="Black" />
                 </HorizontalStackLayout>
                 <Border Margin="0,35,0,0">
-                <Entry  Placeholder="Note" Text="{Binding Advertisement.Note}" />
+                    <Entry  Placeholder="Note" Text="{Binding AdvertisementEdit.Note}" />
                 </Border>
                 <Button HorizontalOptions="Center"
                         BackgroundColor="Black"
@@ -652,7 +625,7 @@
                         WidthRequest="250"
                         Text="Add"
                         Margin="0,45,0,0"
-                        Command="{Binding CreateAdvertisementCommand}"/>
+                        Command="{Binding EditAdvertisementCommand}"/>
 
             </VerticalStackLayout>
             <ActivityIndicator
@@ -665,5 +638,4 @@
                 Color="{StaticResource Primary}" />
         </Grid>
     </ScrollView>
-
 </ContentPage>

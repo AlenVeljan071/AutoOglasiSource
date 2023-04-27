@@ -5,6 +5,7 @@ namespace AutoOglasiSource.Model.Advertisement
     public class AdvertisementModel
     {
         public int Id { get; set; }
+        public int ApplicationUserId { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string Year { get; set; }
@@ -44,5 +45,7 @@ namespace AutoOglasiSource.Model.Advertisement
         public DateTime CreatedAt { get; set; }
         public DateTime UpdatedAt { get; set; }
         public List<ImageResponse> Images { get; set; }
+
+        public string ErrorMessage { get; set; }
     }
 }

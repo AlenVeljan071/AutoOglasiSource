@@ -5,19 +5,17 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:AutoOglasiSource.View"
     Shell.FlyoutBehavior="Disabled">
-
-
     <TabBar>
-        <Tab Title="Home" Icon="homesvg.png">
+        <Tab Icon="home.svg">
             <ShellContent ContentTemplate="{DataTemplate local:MainPage}" />
         </Tab>
-        <Tab Title="Add">
+        <Tab Icon="add.svg">
             <ShellContent ContentTemplate="{DataTemplate local:AddPage}" />
         </Tab>
-        <Tab Title="User">
+        <Tab Icon="user.svg">
             <ShellContent ContentTemplate="{DataTemplate local:UserPage}" />
         </Tab>
-        <Tab Title="Settings">
+        <Tab Icon="settings.svg">
             <ShellContent ContentTemplate="{DataTemplate local:EditUserPage}" />
         </Tab>
     </TabBar>

@@ -3,91 +3,135 @@
     x:Class="AutoOglasiSource.View.UserPage"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:controls="clr-namespace:Microsoft.Maui.Controls;assembly=Microsoft.Maui.Controls"
     xmlns:converters="clr-namespace:AutoOglasiSource.Helpers"
     xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
-    x:DataType="viewmodel:UserViewModel"
-    NavigationPage.HasBackButton="False">
+    x:DataType="viewmodel:UserViewModel">
 
-    <Grid ColumnDefinitions="*" RowDefinitions="120,*,50">
-        <HorizontalStackLayout Padding="10" Spacing="300">
-            <Label
-                x:Name="EmailLabel"
-                Grid.Column="0"
-                FontSize="14"
-                Text="{Binding User.Email}"
-                TextColor="Gray" />
-            <Border
-                Grid.Column="1"
-                BackgroundColor="Gray"
+    <Grid RowDefinitions="120,*,50">
+        <RefreshView
+            Command="{Binding GetUserCommand}"
+            HorizontalOptions="Center"
+            IsRefreshing="{Binding IsRefreshing}"
+            VerticalOptions="Center">
+            <HorizontalStackLayout Padding="25">
+                <!--<Border
+                BackgroundColor="LightBlue"
                 HeightRequest="100"
-                HorizontalOptions="End"
                 Stroke="White"
                 StrokeShape="RoundRectangle 100"
                 StrokeThickness="6"
                 VerticalOptions="Center"
                 WidthRequest="100">
-                <Image
+                -->
+                <!--<Image
                     x:Name="AvatarPicture"
                     Aspect="AspectFill"
                     HeightRequest="100"
                     HorizontalOptions="End"
                     Source="{Binding User.Avatar, Converter={converters:ByteToImageSourceConverter}}"
                     VerticalOptions="Center"
-                    WidthRequest="100" />
-            </Border>
-        </HorizontalStackLayout>
-        <RefreshView
-            Grid.Row="1"
-            Command="{Binding GetUserCommand}"
-            HorizontalOptions="Center"
-            IsRefreshing="{Binding IsRefreshing}"
-            VerticalOptions="Center">
-            <VerticalStackLayout Padding="25" Spacing="100">
-                <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="15">
-                    <Button
-                        BackgroundColor="Gray"
-                        Command="{Binding GoToLoginCommand}"
-                        HorizontalOptions="Center"
-                        Text="Login"
-                        VerticalOptions="Center"
-                        WidthRequest="100" />
-                    <Button
-                        BackgroundColor="Gray"
-                        Command="{Binding GoToRegisterCommand}"
-                        HorizontalOptions="Center"
-                        Text="Register"
-                        VerticalOptions="Center"
-                        WidthRequest="100" />
-                </HorizontalStackLayout>
+                    WidthRequest="100" />-->
+                <!--
 
+                </Border>-->
+                <Label
+                    x:Name="EmailLabel"
+                    FontAttributes="Bold"
+                    FontSize="16"
+                    Text="{Binding UserEmail}"
+                    TextColor="Gray" />
+            </HorizontalStackLayout>
+        </RefreshView>
+        <VerticalStackLayout
+            Grid.Row="1"
+            Padding="25"
+            Spacing="10">
+            <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Spacing="20">
                 <Button
-                    BackgroundColor="Gray"
+                    BackgroundColor="Black"
                     Command="{Binding GoToLoginCommand}"
                     HorizontalOptions="Center"
-                    Text="Edit account"
+                    Text="Login"
+                    TextColor="White"
                     VerticalOptions="Center"
-                    WidthRequest="500" />
-
+                    WidthRequest="190" />
                 <Button
-                    BackgroundColor="Gray"
-                    Command="{Binding GoToMyAdvertisementsCommand}"
+                    BackgroundColor="Black"
+                    Command="{Binding GoToRegisterCommand}"
                     HorizontalOptions="Center"
-                    Text="My Advertisements"
+                    Text="Register"
+                    TextColor="White"
                     VerticalOptions="Center"
-                    WidthRequest="500" />
+                    WidthRequest="190" />
+            </HorizontalStackLayout>
+
+            <Button
+                BackgroundColor="Black"
+                Command="{Binding GoToLoginCommand}"
+                HorizontalOptions="Center"
+                Text="Edit account"
+                TextColor="White"
+                VerticalOptions="Center"
+                WidthRequest="400" />
+
+            <Button
+                Margin="0,50,0,0"
+                BackgroundColor="Black"
+                Command="{Binding GoToMyAdvertisementsCommand}"
+                HorizontalOptions="Center"
+                Text="My Advertisement"
+                TextColor="White"
+                VerticalOptions="Center"
+                WidthRequest="400" />
 
 
-            </VerticalStackLayout>
-        </RefreshView>
+
+
+            <Label
+                Margin="0,35,0,0"
+                FontSize="18"
+                HorizontalOptions="Center"
+                Text="My rating"
+                TextColor="Black" />
+            <HorizontalStackLayout
+                Padding="5"
+                HorizontalOptions="Center"
+                Spacing="15">
+
+                <ImageButton
+                    HeightRequest="35"
+                    Source="like.svg"
+                    WidthRequest="35" />
+                <Label
+                    Padding="0,18,0,0"
+                    FontSize="18"
+                    Text="{Binding User.UpCount}"
+                    TextColor="Black" />
+                <Label
+                    Padding="0,18,0,0"
+                    FontSize="18"
+                    Text="{Binding User.DownCount}"
+                    TextColor="Black" />
+                <ImageButton
+                    Margin="0,17,0,0"
+                    HeightRequest="35"
+                    Source="dislike.svg"
+                    WidthRequest="35" />
+
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
 
         <Button
             Grid.Row="2"
-            BackgroundColor="Gray"
+            BackgroundColor="Black"
             Command="{Binding LogoutCommand}"
             HorizontalOptions="Center"
             Text="Sign out"
+            TextColor="White"
             VerticalOptions="End"
-            WidthRequest="500" />
+            WidthRequest="400" />
 
     </Grid>
 

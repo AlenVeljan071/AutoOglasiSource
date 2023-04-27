@@ -16,5 +16,6 @@ namespace AutoOglasiSource.Model.Account
         public int? DownCount { get; set; }
         public int? Rating { get; set; }
         public byte[] Avatar { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

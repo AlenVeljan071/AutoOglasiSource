@@ -1,62 +1,106 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="AutoOglasiSource.View.RegisterPage"
-             xmlns:viewmodel ="clr-namespace:AutoOglasiSource.ViewModel"
-             xmlns:converters="clr-namespace:AutoOglasiSource.Helpers"
-             x:DataType ="viewmodel:RegisterViewModel">
-    <Grid RowDefinitions="50,120,*" RowSpacing="45">
-            <VerticalStackLayout  Spacing="5">
-                <Label Text="Welcome!" FontSize="28" TextColor="Gray" HorizontalTextAlignment="Center" />
-                <Label Text="Register to your account" FontSize="18" TextColor="Gray" 
-                   HorizontalTextAlignment="Center" />
-            </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="1" HorizontalOptions="Center">
-                <ImageButton
-                     BackgroundColor="Gray"
-                     BorderWidth="3"
-                     Command="{Binding ImageUploadCommand}"
-                     CornerRadius="100"
-                     HeightRequest="100"
-                     Source="{Binding PhotoBytes, Converter={converters:ByteToImageSourceConverter}}"
-                     WidthRequest="100" />
-              <Label Text="Profile picture" TextColor="Gray"/>
+<ContentPage
+    x:Class="AutoOglasiSource.View.RegisterPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:AutoOglasiSource.Helpers"
+    xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
+    x:DataType="viewmodel:RegisterViewModel">
+    <Shell.BackButtonBehavior>
+        <BackButtonBehavior IsEnabled="False" IsVisible="False" />
+    </Shell.BackButtonBehavior>
+    <Grid RowDefinitions="50,120,*" RowSpacing="45" Padding="10">
+        <VerticalStackLayout Spacing="5">
+            <Button Text="Close"
+                    Command="{Binding ClosePageCommand}"
+                    HorizontalOptions="Start"
+                    WidthRequest="78"
+                    BackgroundColor="Black"
+                    TextColor="White" />
+            <Label
+                FontSize="28"
+                HorizontalTextAlignment="Center"
+                Text="Welcome!"
+                TextColor="Gray" />
+            <Label
+                FontSize="18"
+                HorizontalTextAlignment="Center"
+                Text="Register to your account"
+                TextColor="Gray" />
         </VerticalStackLayout>
-        <VerticalStackLayout HorizontalOptions="Center" Grid.Row="2">
-           
+        <VerticalStackLayout Margin="0,35,0,0" Grid.Row="1" HorizontalOptions="Center">
+            <Border
+                BackgroundColor="White"
+                HeightRequest="100"
+                Stroke="White"
+                StrokeShape="RoundRectangle 100"
+                StrokeThickness="6"
+                VerticalOptions="Center"
+                WidthRequest="100">
 
-              <StackLayout Orientation="Horizontal">
-                    <Entry  Placeholder="Enter lirst name" Text="{Binding User.FirstName}" />
-                </StackLayout>
+                <ImageButton
+                    Aspect="AspectFill"
+                    BackgroundColor="Black"
+                    BorderWidth="3"
+                    Command="{Binding ImageUploadCommand}"
+                    Source="{Binding PhotoBytes, Converter={converters:ByteToImageSourceConverter}}"
+                    WidthRequest="100" />
 
-                <StackLayout Orientation="Horizontal">
-                    <Entry  Placeholder="Enter last name" Text="{Binding User.LastName}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Entry  Placeholder="Enter address" Text="{Binding AddressReq.Address}" />
-                </StackLayout>
 
-                <StackLayout Orientation="Horizontal">
-                    <Entry  Placeholder="Enter city" Text="{Binding AddressReq.City}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Entry  Placeholder="Enter country"  Text="{Binding AddressReq.Country}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Entry  Placeholder="Enter phone" Keyboard="Telephone"  Text="{Binding User.Phone}" />
-                </StackLayout>
-                <StackLayout Orientation="Horizontal">
-                    <Entry Placeholder="Enter email" Keyboard="Email" Text="{Binding User.Email}" />
-                </StackLayout>
+            </Border>
 
-                <StackLayout Orientation="Horizontal">
-                    <Entry  Placeholder="Enter password" IsPassword="True" Text="{Binding User.Password}" />
-                </StackLayout>
+            <Label Text="Profile picture" TextColor="Gray" />
+        </VerticalStackLayout>
+        <VerticalStackLayout Grid.Row="2" HorizontalOptions="Center">
 
-            </VerticalStackLayout>
 
-       
-        <Button Grid.Row="2" Text="Sign In" WidthRequest="500" BackgroundColor="Gray" HorizontalOptions="Center" VerticalOptions="End"
-                Command="{Binding RegisterCommand}" />
+            <StackLayout Orientation="Horizontal">
+                <Entry Placeholder="Enter lirst name" Text="{Binding User.FirstName}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Entry Placeholder="Enter last name" Text="{Binding User.LastName}" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Entry Placeholder="Enter address" Text="{Binding AddressReq.Address}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Entry Placeholder="Enter city" Text="{Binding AddressReq.City}" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Entry Placeholder="Enter country" Text="{Binding AddressReq.Country}" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Entry
+                    Keyboard="Telephone"
+                    Placeholder="Enter phone"
+                    Text="{Binding User.Phone}" />
+            </StackLayout>
+            <StackLayout Orientation="Horizontal">
+                <Entry
+                    Keyboard="Email"
+                    Placeholder="Enter email"
+                    Text="{Binding User.Email}" />
+            </StackLayout>
+
+            <StackLayout Orientation="Horizontal">
+                <Entry
+                    IsPassword="True"
+                    Placeholder="Enter password"
+                    Text="{Binding User.Password}" />
+            </StackLayout>
+
+        </VerticalStackLayout>
+
+
+        <Button
+            Grid.Row="2"
+            BackgroundColor="Black"
+            Command="{Binding RegisterCommand}"
+            HorizontalOptions="Center"
+            Text="Sign In"
+            VerticalOptions="End"
+            WidthRequest="500" />
     </Grid>
 </ContentPage>

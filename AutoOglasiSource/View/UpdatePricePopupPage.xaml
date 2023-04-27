@@ -24,34 +24,34 @@
         <VerticalStackLayout>
             <Label 
                            Text="Price"
-                           VerticalOptions="Start" 
-                           HorizontalOptions="Center" />
+                           HorizontalOptions="Center" 
+                           Margin="0,50,0,0"/>
             <Entry 
                            x:Name="PriceEntry"
-                           VerticalOptions="End" 
                            HorizontalTextAlignment="Center"
                            VerticalTextAlignment="Center"
-                           WidthRequest="100"
+                           WidthRequest="200"
                            Keyboard="Numeric"
+                           TextColor="White"
                            HorizontalOptions="Center"
-                           BackgroundColor="DarkGray"/>
-            <HorizontalStackLayout Spacing="30" Margin="0,40,0,0">
+                           BackgroundColor="Black"/>
+            <HorizontalStackLayout Spacing="30" Margin="0,40,0,0" VerticalOptions="End">
                 <Button
-                    Grid.Row="5"
-                    BackgroundColor="DarkGray"
-                    TextColor="Black"
+                    BackgroundColor="Black"
+                    TextColor="White"
                     HorizontalOptions="Start"
-                    Text="Add Filter"
+                    VerticalOptions="End"
+                    Text="Update Price"
                     WidthRequest="100"
                     Margin="0,50,0,0"
                     Clicked="UpdatePrice_Clicked"
               />
                 <Button
-                    Grid.Row="5"
-                    BackgroundColor="DarkGray"
-                    TextColor="Black"
+                    BackgroundColor="Black"
+                    TextColor="White"
                     HorizontalOptions="End"
                     Text="Close"
+                    VerticalOptions="End"
                     WidthRequest="100"
                     Margin="0,50,0,0"
                     Clicked="Cancel_Clicked"

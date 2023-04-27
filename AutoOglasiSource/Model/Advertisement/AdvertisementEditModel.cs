@@ -2,14 +2,11 @@
 
 namespace AutoOglasiSource.Model.Advertisement
 {
-    public class AdvertisementRequestModel
+    public class AdvertisementEditModel
     {
         public int? Id { get; set; }
-        public int SubCategoryId { get; set; }
         public string Name { get; set; }
         public decimal? Price { get; set; }
-        public int? VehicleBrandId { get; set; }
-        public int? VehicleModelId { get; set; }
         public string Year { get; set; }
         public AddressEntity Address { get; set; }
         public int Color { get; set; }
@@ -46,3 +43,4 @@ namespace AutoOglasiSource.Model.Advertisement
         public string Note { get; set; }
     }
 }
+

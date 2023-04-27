@@ -10,5 +10,6 @@ namespace AutoOglasiSource.Model.Advertisement
         public string Year { get; set; }
         public AddressEntity Address { get; set; }
         public ImageResponse Image { get; set; }
+        public string ErrorMessage { get; set; }
     }
 }

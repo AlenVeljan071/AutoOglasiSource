@@ -54,8 +54,8 @@ namespace AutoOglasiSource.ViewModel
                 var response = await _restDataService.Login(Email, Password);
                 if (response.Success)
                 {
-                    await Shell.Current.GoToAsync(nameof(UserPage));
-                   
+
+                    await Shell.Current.GoToAsync(nameof(RegisterPage));
                 }
                 else
                 {

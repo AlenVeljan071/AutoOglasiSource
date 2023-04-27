@@ -73,8 +73,6 @@ namespace AutoOglasiSource.ViewModel
             }
         }
 
-      
-
         [ObservableProperty]
         byte[] photoBytes;
 

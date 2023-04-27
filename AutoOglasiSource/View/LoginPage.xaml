@@ -18,15 +18,15 @@
                    HorizontalTextAlignment="Center" />
         </VerticalStackLayout>
 
-        <StackLayout Orientation="Horizontal">
+        <Frame HorizontalOptions="Center" WidthRequest="300">
             <Entry x:Name="Username" Placeholder="Enter Username" Text="{Binding Email}" />
-        </StackLayout>
+        </Frame>
 
-        <StackLayout Orientation="Horizontal">
+        <Frame HorizontalOptions="Center" WidthRequest="300">
             <Entry x:Name="Password" Placeholder="Enter Password" IsPassword="True" Text="{Binding Password}" />
-        </StackLayout>
+        </Frame>
 
-        <Button Text="Sign In" WidthRequest="100" CornerRadius="20" HorizontalOptions="Center" 
+        <Button Text="Sign In"  WidthRequest="300"  HorizontalOptions="Center"  BackgroundColor="Black"
                 Command="{Binding LoginCommand}" />
     </VerticalStackLayout>
 </ContentPage>

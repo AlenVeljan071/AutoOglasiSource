@@ -283,20 +283,19 @@ namespace AutoOglasiSource.Services
                     return response;
 
                 }
-                return null;
-                //else
-                //{
-                //    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
-                //    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
-                //    return new TrainerModel { ErrorMessage = errorData.Error };
-                //}
+              
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new UserModel { ErrorMessage = errorData.Error };
+                }
             }
             catch (Exception ex)
             {
                 var errorResponse = ex.Message;
-                //errorResponse = "The server is under maintenance. Please try again later.";
-                //return new TrainerModel { ErrorMessage = errorResponse };
-                return null;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new UserModel { ErrorMessage = errorResponse };
             }
         }
 
@@ -321,7 +320,6 @@ namespace AutoOglasiSource.Services
                 httpClient.DefaultRequestHeaders.Authorization
                       = new AuthenticationHeaderValue("Bearer", oauthToken);
 
-                advRequest.Name = "Audi";
                 var requestDataJson = JsonConvert.SerializeObject(advRequest);
 
                 var requestContent = new StringContent(requestDataJson, Encoding.UTF8, "application/json");
@@ -423,6 +421,7 @@ namespace AutoOglasiSource.Services
                 if (apiResponse.IsSuccessStatusCode)
                 {
                     return new ErrorData { Error = "Deleted" };
+                    
 
                 }
                 else
@@ -440,6 +439,56 @@ namespace AutoOglasiSource.Services
             }
         }
 
+
+        public async Task<CreateModel> UpdateAdvertisementAsync(AdvertisementEditModel advRequest)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+
+                if (oauthToken == null)
+                {
+                    return new CreateModel { ErrorMessage = "Please login" };
+                }
+                httpClient.DefaultRequestHeaders.Authorization
+                      = new AuthenticationHeaderValue("Bearer", oauthToken);
+
+                advRequest.Name = "Audi";
+                var requestDataJson = JsonConvert.SerializeObject(advRequest);
+
+                var requestContent = new StringContent(requestDataJson, Encoding.UTF8, "application/json");
+                var apiResponse = await httpClient.PutAsync($"{_url}/advertisements", requestContent);
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    var responseJson = await apiResponse.Content.ReadAsStringAsync();
+                    var responseData = JsonConvert.DeserializeObject<CreateModel>(responseJson);
+
+                    return new CreateModel { Success = true};
+                }
+                else if (apiResponse.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    var errorResponse = "Please login.";
+                    return new CreateModel { ErrorMessage = errorResponse };
+                }
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new CreateModel { ErrorMessage = errorData.Error };
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new CreateModel { ErrorMessage = errorResponse };
+            }
+        }
 
         public async Task<ErrorData> UpdatePriceAsync(int id, decimal price)
         {
@@ -546,7 +595,7 @@ namespace AutoOglasiSource.Services
                             Price = item.Price,
                             Address = item.Address,
                             Name = item.Name,
-                            Image = item.Image
+                            Image = item.Image != null ? item.Image : new ImageResponse { Link = "https://cdn.pixabay.com/photo/2012/04/13/20/37/car-33556_960_720.png" },
 
                         };
                         response.Add(advertisement);
@@ -555,18 +604,11 @@ namespace AutoOglasiSource.Services
 
                 }
                 return null;
-                //else
-                //{
-                //    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
-                //    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
-                //    return new TrainerModel { ErrorMessage = errorData.Error };
-                //}
+               
             }
             catch (Exception ex)
             {
                 var errorResponse = ex.Message;
-                //errorResponse = "The server is under maintenance. Please try again later.";
-                //return new TrainerModel { ErrorMessage = errorResponse };
                 return null;
             }
 
@@ -592,6 +634,7 @@ namespace AutoOglasiSource.Services
                         var response = new AdvertisementModel()
                         {
                             Id = responseData.Id,
+                            ApplicationUserId = responseData.ApplicationUserId,
                             Year = responseData.Year,
                             Price = responseData.Price,
                             Address = responseData.Address,
@@ -630,26 +673,24 @@ namespace AutoOglasiSource.Services
                             Weight = responseData.Weight,
                             Drive = responseData.Drive,
                             ParkingSensors = responseData.ParkingSensors,
-                            Images = responseData.Images
+                            Images = responseData.Images.Count != 0 ? responseData.Images : new List<ImageResponse> { new ImageResponse { Link = "https://cdn.pixabay.com/photo/2012/04/13/20/37/car-33556_960_720.png" } }
                         };
                     
                     return response;
 
                 }
-                return null;
-                //else
-                //{
-                //    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
-                //    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
-                //    return new TrainerModel { ErrorMessage = errorData.Error };
-                //}
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new AdvertisementModel { ErrorMessage = errorData.Error };
+                }
             }
             catch (Exception ex)
             {
                 var errorResponse = ex.Message;
-                //errorResponse = "The server is under maintenance. Please try again later.";
-                //return new TrainerModel { ErrorMessage = errorResponse };
-                return null;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new AdvertisementModel { ErrorMessage = errorResponse };
             }
 
         }
@@ -673,18 +714,10 @@ namespace AutoOglasiSource.Services
                     return responseData;
                 }
                 return null;
-                //else
-                //{
-                //    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
-                //    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
-                //    return new TrainerModel { ErrorMessage = errorData.Error };
-                //}
             }
             catch (Exception ex)
             {
                 var errorResponse = ex.Message;
-                //errorResponse = "The server is under maintenance. Please try again later.";
-                //return new TrainerModel { ErrorMessage = errorResponse };
                 return null;
             }
 
@@ -709,23 +742,61 @@ namespace AutoOglasiSource.Services
                     return responseData;
                 }
                 return null;
-                //else
-                //{
-                //    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
-                //    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
-                //    return new TrainerModel { ErrorMessage = errorData.Error };
-                //}
             }
             catch (Exception ex)
             {
                 var errorResponse = ex.Message;
-                //errorResponse = "The server is under maintenance. Please try again later.";
-                //return new TrainerModel { ErrorMessage = errorResponse };
                 return null;
             }
 
         }
 
         #endregion
+
+        #region Rating
+
+        public async Task<ErrorData> RatingAsync(int entityTypeRatingId, int entityTypeId, int thumb)
+        {
+            if (Connectivity.Current.NetworkAccess != NetworkAccess.Internet)
+            {
+                throw new Exception("No Internet access!");
+            }
+            try
+            {
+                string oauthToken = await SecureStorage.Default.GetAsync("oauth_token");
+
+                if (oauthToken == null)
+                {
+                    return new ErrorData { Error = "Please login" };
+                }
+                httpClient.DefaultRequestHeaders.Authorization
+                      = new AuthenticationHeaderValue("Bearer", oauthToken);
+                var request = new { EntityTypeRatingId = entityTypeRatingId, EntityTypeId = entityTypeId, Thumb = thumb };
+                var requestDataJson = JsonConvert.SerializeObject(request);
+
+                var requestContent = new StringContent(requestDataJson, Encoding.UTF8, "application/json");
+                var apiResponse = await httpClient.PostAsync($"{_url}/ratingreview/rating", requestContent);
+
+                if (apiResponse.IsSuccessStatusCode)
+                {
+                    return new ErrorData();
+
+                }
+                else
+                {
+                    var errorResponse = await apiResponse.Content.ReadAsStringAsync();
+                    var errorData = JsonConvert.DeserializeObject<ErrorData>(errorResponse);
+                    return new ErrorData { Error = errorData.Error };
+                }
+            }
+            catch (Exception ex)
+            {
+                var errorResponse = ex.Message;
+                errorResponse = "The server is under maintenance. Please try again later.";
+                return new ErrorData { Error = errorResponse };
+            }
+        }
+        #endregion
+
     }
 }

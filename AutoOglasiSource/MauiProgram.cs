@@ -30,24 +30,26 @@ public static class MauiProgram
         builder.Services.AddSingleton<IPopupNavigation>(MopupService.Instance);
        
 		builder.Services.AddTransient<MainPage>();
-        builder.Services.AddSingleton<AdvertisementDetailsPage>();
-        builder.Services.AddSingleton<AddPage>();
-        builder.Services.AddSingleton<LoginPage>();
+        builder.Services.AddTransient<AdvertisementDetailsPage>();
+        builder.Services.AddTransient<AddPage>();
+        builder.Services.AddTransient<LoginPage>();
         builder.Services.AddTransient<UserPage>();
-        builder.Services.AddSingleton<RegisterPage>();
-        builder.Services.AddSingleton<AddPhotosPage>();
-        builder.Services.AddSingleton<MyAdvertisementsListPage>();
-        builder.Services.AddSingleton<MyAdvertisementPage>();
+        builder.Services.AddTransient<RegisterPage>();
+        builder.Services.AddTransient<AddPhotosPage>();
+        builder.Services.AddTransient<MyAdvertisementsListPage>();
+        builder.Services.AddTransient<MyAdvertisementPage>();
+        builder.Services.AddTransient<EditPage>();
 
-        builder.Services.AddSingleton<LoginViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<AdvertisementsViewModel>();
-        builder.Services.AddSingleton<AdvertisementDetailsViewModel>();
+        builder.Services.AddTransient<AdvertisementDetailsViewModel>();
         builder.Services.AddTransient<UserViewModel>();
-        builder.Services.AddSingleton<RegisterViewModel>();
-        builder.Services.AddSingleton<AddAdvertisementViewModel>();
+        builder.Services.AddTransient<RegisterViewModel>();
+        builder.Services.AddTransient<AddAdvertisementViewModel>();
         builder.Services.AddTransient<AddPhotosViewModel>();
         builder.Services.AddTransient<MyAdvertisementsListViewModel>();
         builder.Services.AddTransient<MyAdvertisementPageViewModel>();
+        builder.Services.AddTransient<EditAdvertisementVIewModel>();
 
 
 

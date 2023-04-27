@@ -111,6 +111,8 @@ namespace AutoOglasiSource.ViewModel
                 }
 
                 IsBusy = true;
+                PhotoBytes = null;
+                image = null;
                 
                 Advertisement = await _restDataService.GetAdvertisementByIdAsync(Id);
 
@@ -132,7 +134,7 @@ namespace AutoOglasiSource.ViewModel
         }
        public async Task DisplayLoginMessage(string message)
         {
-            await Shell.Current.DisplayAlert("Register Attempt Result", message, "OK");
+            await Shell.Current.DisplayAlert("Photo upload Result", message, "OK");
         }
     }
 }

@@ -4,18 +4,21 @@
              x:Class="AutoOglasiSource.View.AddPhotosPage"
              xmlns:viewmodel ="clr-namespace:AutoOglasiSource.ViewModel"
              xmlns:converters="clr-namespace:AutoOglasiSource.Helpers"
-             x:DataType ="viewmodel:AddPhotosViewModel">
-    <VerticalStackLayout>
-        <ImageButton
-                     BackgroundColor="Gray"
+             x:DataType ="viewmodel:AddPhotosViewModel"
+             NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasBackButton="False"
+             >
+    <VerticalStackLayout Padding="100">
+        <ImageButton 
+                     BackgroundColor="Black"
                      BorderWidth="3"
                      Command="{Binding ImageUploadCommand}"
                      HeightRequest="200"
                      Source="{Binding PhotoBytes, Converter={converters:ByteToImageSourceConverter}}"
                      WidthRequest="300" />
-        <Label Text="Profile picture" TextColor="Gray"/>
+        <Label Text="Upload Photo" HorizontalOptions="CenterAndExpand" Margin="0,10,0,0" TextColor="Black" FontSize="16" FontAttributes="Bold"/>
 
-        <Button Command="{Binding GetAdvertisementCommand}" VerticalOptions="EndAndExpand"
+        <Button Margin="9,150,0,0" TextColor="White" Command="{Binding GetAdvertisementCommand}" BackgroundColor="Black" VerticalOptions="EndAndExpand"
                 Text="Finish"/>
     </VerticalStackLayout>
 </ContentPage>

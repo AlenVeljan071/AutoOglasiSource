@@ -9,17 +9,17 @@
              ios:Page.UseSafeArea="True"
              x:DataType="viewmodel:AdvertisementsViewModel"
                >
-
     <Grid
-        ColumnDefinitions="*,*"
+        ColumnDefinitions="45,*"
         ColumnSpacing="5"
         RowDefinitions="Auto,*,Auto"
         RowSpacing="0"
+        Padding="5"
         >
         <ImageButton
          Grid.Column="0"
-         HeightRequest="30"
-         Source="filtericon.png"
+         HeightRequest="40"
+         Source="filter.svg"
          VerticalOptions="Center"
          HorizontalOptions="Start"
          BackgroundColor="Transparent"
@@ -49,7 +49,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:AdvertisementListModel">
                             <Grid Padding="1" HorizontalOptions="Fill">
-                                <Frame HeightRequest="210" Style="{StaticResource CardView}">
+                                <Frame BorderColor="White" HeightRequest="210" Style="{StaticResource CardView}">
                                     <Frame.GestureRecognizers>
                                         <TapGestureRecognizer 
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:AdvertisementsViewModel}},Path=GetAdvertisementDetailCommand}"
@@ -94,9 +94,11 @@
                     <CollectionView.Footer>
                         <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
                             <Button
-                        BackgroundColor="White"
-                        TextColor="Black"
-                        Text="Load More" />
+                              BackgroundColor="Black"
+                              TextColor="White"
+                              WidthRequest="300"
+                                Command="{Binding GetMoreAdvertisementsCommand}"
+                              Text="Load More" />
                         </StackLayout>
                     </CollectionView.Footer>
                 </CollectionView>

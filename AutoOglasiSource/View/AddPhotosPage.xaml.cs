@@ -8,5 +8,6 @@ public partial class AddPhotosPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = viewModel;
-	}
+        NavigationPage.SetHasBackButton(this, false);
+    }
 }

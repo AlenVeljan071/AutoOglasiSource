@@ -4,12 +4,16 @@ namespace AutoOglasiSource;
 
 public partial class AppShell : Shell
 {
-  
+
 
     public AppShell()
-	{
-		InitializeComponent();
-       
+    {
+        InitializeComponent();
+        RegisterRoutes();
+    }
+
+    void RegisterRoutes()
+    {
         Routing.RegisterRoute(nameof(AdvertisementDetailsPage), typeof(AdvertisementDetailsPage));
         Routing.RegisterRoute(nameof(AddPage), typeof(AddPage));
         Routing.RegisterRoute(nameof(MainPage), typeof(MainPage));
@@ -19,7 +23,7 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(AddPhotosPage), typeof(AddPhotosPage));
         Routing.RegisterRoute(nameof(MyAdvertisementsListPage), typeof(MyAdvertisementsListPage));
         Routing.RegisterRoute(nameof(MyAdvertisementPage), typeof(MyAdvertisementPage));
-      
-
+        Routing.RegisterRoute(nameof(EditPage), typeof(EditPage));
     }
 }
+

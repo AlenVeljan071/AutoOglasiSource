@@ -7,96 +7,93 @@
              xmlns:viewmodel="clr-namespace:AutoOglasiSource.ViewModel"
              xmlns:converters="clr-namespace:AutoOglasiSource.Helpers"
              x:DataType="viewmodel:MyAdvertisementPageViewModel"
-             
              >
     
     <ContentPage.ToolbarItems>
         <ToolbarItem
-        IconImageSource="edit.png"
-        Text="Update price"
+        IconImageSource="update_price"
+        Text="Update price>"
         Order="Primary"
             Command="{Binding GoToUpdatePricePageCommand}"
         Priority="0"
         />
         <ToolbarItem
-        IconImageSource="delete.png"
-        Text="Add photos"
-        Order="Primary"
-        Priority="1"
-       />
-        <ToolbarItem
-        IconImageSource="delete.png"
+        IconImageSource="edit.svg"
         Text="Edit"
         Order="Primary"
+        Command="{Binding EditAdvertisementCommand}"
         Priority="1"
        />
         <ToolbarItem
-        IconImageSource="delete.png"
+        IconImageSource="delete.svg"
         Text="Delete"
         Order="Primary"
         Command="{Binding DeleteAdvertisementCommand}"
         Priority="1"
        />
     </ContentPage.ToolbarItems>
-    <ScrollView>
-        <Grid RowDefinitions="250,80,Auto,*">
-            <CarouselView ItemsSource="{Binding Advertisement.Images}" HorizontalOptions="FillAndExpand" HorizontalScrollBarVisibility="Always">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate  x:DataType="local:ImageResponse">
-                        <Grid>
-                            <Border Style="{StaticResource CardView}">
-                                <Image  HorizontalOptions="FillAndExpand"
+    <RefreshView
+            Command="{Binding LoadAdvertisementDataCommand}"
+            IsRefreshing="{Binding IsRefreshing}">
+        <ScrollView>
+            <Grid RowDefinitions="250,80,Auto,*">
+                <CarouselView ItemsSource="{Binding Advertisement.Images}" HorizontalOptions="FillAndExpand" HorizontalScrollBarVisibility="Always">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate  x:DataType="local:ImageResponse">
+                            <Grid>
+                                <Border Style="{StaticResource CardView}">
+                                    <Image  HorizontalOptions="FillAndExpand"
                                 Aspect="AspectFill"
                                 VerticalOptions="FillAndExpand"
-                                Source="{Binding Link}">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyAdvertisementPageViewModel}}, Path=SelectedImageCommand}"
+                                Source="{Binding Link }">
+                                        <Image.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:MyAdvertisementPageViewModel}}, Path=SelectedImageCommand}"
                                                               CommandParameter="{Binding .}"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
+                                        </Image.GestureRecognizers>
+                                    </Image>
+                                </Border>
+                            </Grid>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
 
-            <ImageButton
+                <ImageButton
                         IsVisible="{Binding IsDeleteButtonVisible, Converter={converters:BooleanToVisibilityConverter}}"
                         Command="{Binding AddImageCommand}"
                         BackgroundColor="Transparent"
                         BorderColor="Transparent"
-                        Source="add_photo.png"
+                        Source="add_image.svg"
                         HorizontalOptions="End"
                         VerticalOptions="Start"
-                        Margin="0,10,10,0"
+                        Margin="0,0,70,10"
                         HeightRequest="30"
                         WidthRequest="60" >
-               
-            </ImageButton>
 
-            <ImageButton
+                </ImageButton>
+
+                <ImageButton
                         IsVisible="{Binding IsDeleteButtonVisible, Converter={converters:BooleanToVisibilityConverter}}"
                         Command="{Binding DeleteImageCommand}"
                         BackgroundColor="Transparent"
                         BorderColor="Transparent"
-                        Source="delete_image.png"
+                        Source="remove_image.png"
                         HorizontalOptions="End"
-                        VerticalOptions="End"
+                        VerticalOptions="Start"
                         Margin="0,0,10,10"
                         HeightRequest="30"
                         WidthRequest="60" >
 
-            </ImageButton>
+                </ImageButton>
 
-            <Grid Grid.Row="1" RowDefinitions="Auto,Auto" Padding="10" ColumnDefinitions="*">
-                <Label Style="{StaticResource LargeLabel}" 
+                <Grid Grid.Row="1" RowDefinitions="Auto,Auto" Padding="10" ColumnDefinitions="*">
+                    <Label Style="{StaticResource LargeLabel}" 
                    TextColor="Black"
                    FontSize="18"
                    FontAttributes="Bold"
                    Text="{Binding Advertisement.Name}" 
                    HorizontalOptions="StartAndExpand"
                    Margin="0,5,0,0"/>
-                <Label Style="{StaticResource LargeLabel}" 
+                    <Label Style="{StaticResource LargeLabel}" 
                    Grid.Row="1"
                    TextColor="Black"
                    FontSize="18"
@@ -104,7 +101,7 @@
                    Text="{Binding Advertisement.Price, Converter={converters:DecimalToIntConverterValute}}" 
                    HorizontalOptions="Start"
                    Margin="0,5,0,0"/>
-                <Label Style="{StaticResource LargeLabel}" 
+                    <Label Style="{StaticResource LargeLabel}" 
                    TextColor="Black"
                    FontSize="18"
                    FontAttributes="Bold"
@@ -112,7 +109,7 @@
                    HorizontalOptions="End"
                    Margin="0,5,0,0"/>
 
-                <Label Style="{StaticResource LargeLabel}" 
+                    <Label Style="{StaticResource LargeLabel}" 
                    TextColor="Black"
                    Grid.Row="1"
                    FontSize="18"
@@ -121,17 +118,17 @@
                    HorizontalOptions="End"
                    Margin="0,5,0,0"/>
 
-            </Grid>
+                </Grid>
 
-            <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Padding="10" ColumnDefinitions="*">
-                <Label Style="{StaticResource LargeLabel}" 
+                <Grid Grid.Row="2" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" Padding="10" ColumnDefinitions="*">
+                    <Label Style="{StaticResource LargeLabel}" 
                    TextColor="Black"
                    FontSize="18"
                    FontAttributes="Bold"
                    Text="Tehnical Data" 
                    HorizontalOptions="Center"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="1"
                    TextColor="Black"
                    FontSize="14"
@@ -139,7 +136,7 @@
                    Text="Price:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="1"
                    TextColor="Black"
                    FontSize="14"
@@ -147,7 +144,7 @@
                    Text="{Binding Advertisement.Price, Converter={converters:DecimalToIntConverterValute}}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="2"
                    TextColor="Black"
                    FontSize="14"
@@ -155,7 +152,7 @@
                    Text="Mileage:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="2"
                    TextColor="Black"
                    FontSize="14"
@@ -164,7 +161,7 @@
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
 
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="3"
                    TextColor="Black"
                    FontSize="14"
@@ -172,7 +169,7 @@
                    Text="Fuel:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="3"
                    TextColor="Black"
                    FontSize="14"
@@ -180,7 +177,7 @@
                    Text="{Binding Advertisement.Fuel.Name}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="4"
                    TextColor="Black"
                    FontSize="14"
@@ -188,7 +185,7 @@
                    Text="Shifter:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="4"
                    TextColor="Black"
                    FontSize="14"
@@ -196,7 +193,7 @@
                    Text="{Binding Advertisement.Shifter.Name}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="5"
                    TextColor="Black"
                    FontSize="14"
@@ -204,7 +201,7 @@
                    Text="KW:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="5"
                    TextColor="Black"
                    FontSize="14"
@@ -212,7 +209,7 @@
                    Text="{Binding Advertisement.KW}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="6"
                    TextColor="Black"
                    FontSize="14"
@@ -220,7 +217,7 @@
                    Text="Horse power:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="6"
                    TextColor="Black"
                    FontSize="14"
@@ -228,7 +225,7 @@
                    Text="{Binding Advertisement.HorsePower}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="7"
                    TextColor="Black"
                    FontSize="14"
@@ -236,7 +233,7 @@
                    Text="CCM:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="7"
                    TextColor="Black"
                    FontSize="14"
@@ -244,7 +241,7 @@
                    Text="{Binding Advertisement.CCM}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="8"
                    TextColor="Black"
                    FontSize="14"
@@ -252,7 +249,7 @@
                    Text="Gear box:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="8"
                    TextColor="Black"
                    FontSize="14"
@@ -261,7 +258,7 @@
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
 
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="9"
                    TextColor="Black"
                    FontSize="14"
@@ -269,7 +266,7 @@
                    Text="Colour:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="9"
                    TextColor="Black"
                    FontSize="14"
@@ -278,7 +275,7 @@
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
 
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="10"
                    TextColor="Black"
                    FontSize="14"
@@ -286,7 +283,7 @@
                    Text="Emission:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="10"
                    TextColor="Black"
                    FontSize="14"
@@ -294,7 +291,7 @@
                    Text="{Binding Advertisement.Emission.Name}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="11"
                    TextColor="Black"
                    FontSize="14"
@@ -302,7 +299,7 @@
                    Text="Seats:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="11"
                    TextColor="Black"
                    FontSize="14"
@@ -310,7 +307,7 @@
                    Text="{Binding Advertisement.Seat.Name}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="12"
                    TextColor="Black"
                    FontSize="14"
@@ -318,7 +315,7 @@
                    Text="Drive:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="12"
                    TextColor="Black"
                    FontSize="14"
@@ -326,7 +323,7 @@
                    Text="{Binding Advertisement.Drive.Name}" 
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="13"
                    TextColor="Black"
                    FontSize="14"
@@ -334,7 +331,7 @@
                    Text="Parking sensors:" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="13"
                    TextColor="Black"
                    FontSize="14"
@@ -343,9 +340,9 @@
                    HorizontalOptions="End"
                    Margin="0,3,0,0"/>
 
-            </Grid>
-            <Grid Grid.Row="3" Padding="10" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="25,*">
-                <Label Style="{StaticResource LargeLabel}" 
+                </Grid>
+                <Grid Grid.Row="3" Padding="10" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="25,*">
+                    <Label Style="{StaticResource LargeLabel}" 
                    Grid.ColumnSpan="2"
                    TextColor="Black"
                    FontSize="18"
@@ -353,7 +350,7 @@
                    Text="Features" 
                    HorizontalOptions="Start"
                    Margin="0,3,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="1"
                    Grid.Column="1"
                    TextColor="Black"
@@ -362,7 +359,7 @@
                    Text="Abs" 
                    HorizontalOptions="Start"
                    Margin="0,10,0,0"/>
-                <CheckBox 
+                    <CheckBox 
                    Grid.Row="1"
                    HeightRequest="15"
                    WidthRequest="15"
@@ -371,7 +368,7 @@
                    IsChecked="{Binding Advertisement.Abs}" 
                    HorizontalOptions="Start"
                    Margin="0,12,0,0"/>
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="2"
                    Grid.Column="1"
                    TextColor="Black"
@@ -380,7 +377,7 @@
                    Text="Airbag" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox  
+                    <CheckBox  
                    Grid.Row="2"
                    HeightRequest="15"
                    WidthRequest="15"
@@ -389,7 +386,7 @@
                    IsChecked="{Binding Advertisement.Airbag}" 
                    HorizontalOptions="Start"
                   />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="3"
                    Grid.Column="1"
                    TextColor="Black"
@@ -398,7 +395,7 @@
                    Text="Alarm" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="3"
                    IsChecked="{Binding Advertisement.Alarm}" 
                           IsEnabled="False"
@@ -407,7 +404,7 @@
                    WidthRequest="15"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="4"
                    Grid.Column="1"
                    TextColor="Black"
@@ -416,7 +413,7 @@
                    Text="Aluminium Rims" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox  
+                    <CheckBox  
                    Grid.Row="4"
                    HeightRequest="15"
                    WidthRequest="15"
@@ -425,7 +422,7 @@
                    IsChecked="{Binding Advertisement.AluminiumRims}" 
                    HorizontalOptions="Start"
                   />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="5"
                    Grid.Column="1"
                    TextColor="Black"
@@ -434,7 +431,7 @@
                    Text="Central lock" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="5"
                    IsChecked="{Binding Advertisement.CentralLock}" 
                    HeightRequest="15"
@@ -443,7 +440,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="6"
                    Grid.Column="1"
                    TextColor="Black"
@@ -452,7 +449,7 @@
                    Text="Dpf filter" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="6"
                    IsChecked="{Binding Advertisement.DpfFilter}" 
                    HeightRequest="15"
@@ -461,7 +458,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="7"
                    Grid.Column="1"
                    TextColor="Black"
@@ -470,7 +467,7 @@
                    Text="Digital climate" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox  
+                    <CheckBox  
                    Grid.Row="7"
                    HeightRequest="15"
                    WidthRequest="15"
@@ -479,7 +476,7 @@
                    IsChecked="{Binding Advertisement.DigitalClimate}" 
                    HorizontalOptions="Start"
                   />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="8"
                    TextColor="Black"
                    FontSize="14"
@@ -488,7 +485,7 @@
                    Text="Remote unlocking" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="8"
                    IsChecked="{Binding Advertisement.RemoteUnlocking}" 
                    HeightRequest="15"
@@ -497,7 +494,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="9"
                    Grid.Column="1"
                    TextColor="Black"
@@ -506,7 +503,7 @@
                    Text="Electric windows" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="9"
                    IsChecked="{Binding Advertisement.ElectricWindows}" 
                    HeightRequest="15"
@@ -515,7 +512,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="10"
                    Grid.Column="1"
                    TextColor="Black"
@@ -524,7 +521,7 @@
                    Text="Electric mirrors" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="10"
                    IsChecked="{Binding Advertisement.ElectricMirrors}" 
                    HeightRequest="15"
@@ -533,7 +530,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="11"
                    Grid.Column="1"
                    TextColor="Black"
@@ -542,7 +539,7 @@
                    Text="Seat heating" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox  
+                    <CheckBox  
                    Grid.Row="11"
                    HeightRequest="15"
                    WidthRequest="15"
@@ -551,7 +548,7 @@
                    IsChecked="{Binding Advertisement.SeatHeating}" 
                    HorizontalOptions="Start"
                   />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="12"
                         Grid.Column="1"
                    TextColor="Black"
@@ -560,7 +557,7 @@
                    Text="Sterring wheel" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="12"
                    IsChecked="{Binding Advertisement.SteeringWheelControls}" 
                    HeightRequest="15"
@@ -569,7 +566,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="13"
                    Grid.Column="1"
                    TextColor="Black"
@@ -578,7 +575,7 @@
                    Text="Navigation" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="13"
                    IsChecked="{Binding Advertisement.Navigation}" 
                    HeightRequest="15"
@@ -587,7 +584,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="14"
                         Grid.Column="1"
                    TextColor="Black"
@@ -596,7 +593,7 @@
                    Text="Park assist" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="14"
                    IsChecked="{Binding Advertisement.ParkAssist}" 
                    HeightRequest="15"
@@ -605,7 +602,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="15"
                    Grid.Column="1"
                    TextColor="Black"
@@ -614,7 +611,7 @@
                    Text="Service book" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="15"
                    IsChecked="{Binding Advertisement.ServiceBook}" 
                    HeightRequest="15"
@@ -623,7 +620,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="16"
                    Grid.Column="1"
                    TextColor="Black"
@@ -632,7 +629,7 @@
                    Text="Cruise control" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox  
+                    <CheckBox  
                    Grid.Row="16"
                    HeightRequest="15"
                    WidthRequest="15"
@@ -641,7 +638,7 @@
                    IsChecked="{Binding Advertisement.CruiseControl}" 
                    HorizontalOptions="Start"
                   />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="17"
                    Grid.Column="1"
                    TextColor="Black"
@@ -650,7 +647,7 @@
                    Text="Damaged" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="17"
                    IsChecked="{Binding Advertisement.Damaged}" 
                    HeightRequest="15"
@@ -659,7 +656,7 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-                <Label Style="{StaticResource MediumLabel}" 
+                    <Label Style="{StaticResource MediumLabel}" 
                    Grid.Row="18"
                    Grid.Column="1"
                    TextColor="Black"
@@ -668,7 +665,7 @@
                    Text="Registered" 
                    HorizontalOptions="Start"
                    />
-                <CheckBox Style="{StaticResource MediumLabel}" 
+                    <CheckBox Style="{StaticResource MediumLabel}" 
                    Grid.Row="18"
                    IsChecked="{Binding Advertisement.Registered}" 
                    HeightRequest="15"
@@ -677,9 +674,9 @@
                           Color="DarkGray"
                    HorizontalOptions="Start"
                     />
-            </Grid>
+                </Grid>
 
-            <ActivityIndicator
+                <ActivityIndicator
             Grid.RowSpan="2"
             Grid.ColumnSpan="2"
             HorizontalOptions="Fill"
@@ -687,6 +684,7 @@
             IsVisible="{Binding IsBusy}"
             VerticalOptions="Center"
             Color="{StaticResource Primary}" />
-        </Grid>
-    </ScrollView>
+            </Grid>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>

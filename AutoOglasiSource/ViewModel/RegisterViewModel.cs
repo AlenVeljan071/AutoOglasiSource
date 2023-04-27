@@ -4,11 +4,6 @@ using AutoOglasiSource.Services;
 using AutoOglasiSource.View;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AutoOglasiSource.ViewModel
 {
@@ -34,6 +29,11 @@ namespace AutoOglasiSource.ViewModel
         [ObservableProperty]
         bool isRefreshing;
 
+        [RelayCommand]
+        async Task ClosePage()
+        {
+            await Shell.Current.GoToAsync(nameof(UserPage));
+        }
 
         [RelayCommand]
         public async Task RegisterAsync()
@@ -92,7 +92,6 @@ namespace AutoOglasiSource.ViewModel
 
             if (photo != null)
             {
-                // Convert the photo stream to a byte array
                 byte[] photoBytes;
                 using (var memoryStream = new MemoryStream())
                 {
@@ -101,12 +100,11 @@ namespace AutoOglasiSource.ViewModel
                     PhotoBytes = photoBytes;
                 }
 
-
                 Avatarbase64string = Convert.ToBase64String(photoBytes);
-
-
             }
         }
+
+        
 
         async Task DisplayLoginMessage(string message)
         {
